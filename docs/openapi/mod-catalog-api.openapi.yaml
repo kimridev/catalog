@@ -1,0 +1,128 @@
+openapi: 3.1.0
+info:
+  title: Kimri Mod Catalog API
+  version: 1.0.0
+servers:
+  - url: https://api.kimri.dev
+paths:
+  /v1/catalogs/{categoryId}/mod-catalogs:
+    get:
+      summary: List mod catalogs for a category
+      parameters:
+        - in: path
+          name: categoryId
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: List of catalogs
+          content:
+            application/json:
+              schema:
+                $ref: '../../schemas/api/mod-catalogs-list-response.schema.json'
+        '404':
+          description: Category or catalogs not found
+          content:
+            application/json:
+              schema:
+                $ref: '../../schemas/api/error.schema.json'
+  /v1/mod-catalogs/{catalogId}/entries:
+    get:
+      summary: List entries for a mod catalog
+      parameters:
+        - in: path
+          name: catalogId
+          required: true
+          schema:
+            type: string
+        - in: query
+          name: query
+          required: false
+          schema:
+            type: string
+        - in: query
+          name: page
+          required: false
+          schema:
+            type: integer
+            minimum: 1
+            default: 1
+        - in: query
+          name: page_size
+          required: false
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 100
+            default: 30
+        - in: query
+          name: sort
+          required: false
+          schema:
+            type: string
+            enum: [featured, recent, downloads]
+            default: featured
+      responses:
+        '200':
+          description: Page of entries
+          content:
+            application/json:
+              schema:
+                $ref: '../../schemas/api/mod-catalog-entries-response.schema.json'
+        '404':
+          description: Catalog not found
+          content:
+            application/json:
+              schema:
+                $ref: '../../schemas/api/error.schema.json'
+  /v1/servers/{serverId}/mod-installs:
+    post:
+      summary: Queue install for a catalog entry
+      parameters:
+        - in: path
+          name: serverId
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '../../schemas/api/mod-install-request.schema.json'
+      responses:
+        '202':
+          description: Install queued
+          content:
+            application/json:
+              schema:
+                $ref: '../../schemas/api/mod-install-queued-response.schema.json'
+        '400':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: '../../schemas/api/error.schema.json'
+  /v1/mod-installs/{installId}:
+    get:
+      summary: Get install status
+      parameters:
+        - in: path
+          name: installId
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Install status
+          content:
+            application/json:
+              schema:
+                $ref: '../../schemas/api/mod-install-status-response.schema.json'
+        '404':
+          description: Install not found
+          content:
+            application/json:
+              schema:
+                $ref: '../../schemas/api/error.schema.json'

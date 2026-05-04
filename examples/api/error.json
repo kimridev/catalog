@@ -1,0 +1,7 @@
+{
+  "error": {
+    "code": "CATALOG_PROVIDER_UNAVAILABLE",
+    "message": "Modrinth API timed out",
+    "retryable": true
+  }
+}

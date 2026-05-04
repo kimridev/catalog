@@ -7,6 +7,7 @@ Public source-of-truth catalog for Kimri game metadata.
 - `categories/`: game category definitions
 - `images/`: variant/runtime image definitions (historical folder name)
 - `modding-profiles/`: modding profile definitions and compatibility
+- `mod-catalogs/`: mod/plugin catalog providers and install targets
 - `data.txt`: manual curation checklist and guidance
 - `schemas/catalog.schema.json`: JSON schema for definitions
 
@@ -27,6 +28,24 @@ This repo validates all `*.json` files on PR/push via GitHub Actions.
 
 Backend should ingest these JSON definitions and publish catalog versions.
 Frontend should consume catalog via backend API and branch behavior by ID.
+
+
+## Production Rollout
+
+- Repo split + versioning/import policy:
+  - `docs/prod-catalog-rollout.md`
+- Release artifact workflow:
+  - `.github/workflows/release-catalog.yml`
+
+## Contracts
+
+- Mod/plugin catalog backend/frontend contract:
+  - `docs/mod-catalog-api-contract.md`
+- OpenAPI:
+  - `docs/openapi/mod-catalog-api.openapi.yaml`
+- API payload schemas + examples:
+  - `schemas/api/*.schema.json`
+  - `examples/api/*.json`
 
 ## Automated Docker publish dispatch
 

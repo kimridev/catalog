@@ -38,6 +38,21 @@ jobs:
             ajv validate -s schemas/catalog.schema.json -d "$f" --spec=draft2020
           done
 
+      - name: Validate mod/plugin catalogs
+        run: |
+          find mod-catalogs -name '*.json' -print0 | while IFS= read -r -d '' f; do
+            ajv validate -s schemas/mod-catalog.schema.json -d "$f" --spec=draft2020
+          done
+
+      - name: Validate API example payloads
+        run: |
+          ajv validate -s schemas/api/mod-catalogs-list-response.schema.json -d examples/api/mod-catalogs-list-response.json --spec=draft2020
+          ajv validate -s schemas/api/mod-catalog-entries-response.schema.json -d examples/api/mod-catalog-entries-response.json --spec=draft2020
+          ajv validate -s schemas/api/mod-install-request.schema.json -d examples/api/mod-install-request.json --spec=draft2020
+          ajv validate -s schemas/api/mod-install-queued-response.schema.json -d examples/api/mod-install-queued-response.json --spec=draft2020
+          ajv validate -s schemas/api/mod-install-status-response.schema.json -d examples/api/mod-install-status-response.json --spec=draft2020
+          ajv validate -s schemas/api/error.schema.json -d examples/api/error.json --spec=draft2020
+
       - name: Basic ID uniqueness checks
         run: |
           python3 <<'PY'
@@ -55,8 +70,9 @@ jobs:
           cats = ids(glob.glob('categories/*.json'))
           vars_ = ids(glob.glob('images/**/*.json', recursive=True))
           profs = ids(glob.glob('modding-profiles/**/*.json', recursive=True))
+          mod_catalogs = ids(glob.glob('mod-catalogs/**/*.json', recursive=True))
 
-          for name, items in [('category', cats), ('variant', vars_), ('profile', profs)]:
+          for name, items in [('category', cats), ('variant', vars_), ('profile', profs), ('mod_catalog', mod_catalogs)]:
               seen = {}
               for i, p in items:
                   if not i:

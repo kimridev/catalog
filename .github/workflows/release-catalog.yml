@@ -1,0 +1,76 @@
+name: Release Catalog Artifact
+
+on:
+  workflow_dispatch:
+    inputs:
+      catalog_version:
+        description: "Catalog version (example: catalog-v2026.05.04.1)"
+        required: true
+        type: string
+  push:
+    tags:
+      - 'catalog-v*'
+
+jobs:
+  validate-and-release:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Install ajv-cli
+        run: npm i -g ajv-cli
+
+      - name: Validate catalog
+        run: |
+          for f in categories/*.json; do
+            ajv validate -s schemas/catalog.schema.json -d "$f" --spec=draft2020
+          done
+          find images -name '*.json' -print0 | while IFS= read -r -d '' f; do
+            ajv validate -s schemas/catalog.schema.json -d "$f" --spec=draft2020
+          done
+          find modding-profiles -name '*.json' -print0 | while IFS= read -r -d '' f; do
+            ajv validate -s schemas/catalog.schema.json -d "$f" --spec=draft2020
+          done
+          find mod-catalogs -name '*.json' -print0 | while IFS= read -r -d '' f; do
+            ajv validate -s schemas/mod-catalog.schema.json -d "$f" --spec=draft2020
+          done
+
+      - name: Resolve version
+        id: version
+        run: |
+          if [ "${GITHUB_EVENT_NAME}" = "workflow_dispatch" ]; then
+            echo "value=${{ inputs.catalog_version }}" >> "$GITHUB_OUTPUT"
+          else
+            echo "value=${GITHUB_REF_NAME}" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Build release artifact
+        run: ./scripts/build-release-artifact.sh "${{ steps.version.outputs.value }}" dist
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: catalog-${{ steps.version.outputs.value }}
+          path: |
+            dist/catalog-${{ steps.version.outputs.value }}.tar.gz
+            dist/catalog-${{ steps.version.outputs.value }}.tar.gz.sha256
+            dist/catalog/release-metadata.json
+            dist/catalog/SHA256SUMS
+
+      - name: Publish GitHub Release (tag builds only)
+        if: startsWith(github.ref, 'refs/tags/')
+        uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            dist/catalog-${{ steps.version.outputs.value }}.tar.gz
+            dist/catalog-${{ steps.version.outputs.value }}.tar.gz.sha256
+            dist/catalog/release-metadata.json
+            dist/catalog/SHA256SUMS

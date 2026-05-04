@@ -1,0 +1,42 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.com/schemas/api/mod-catalog-entries-response.schema.json",
+  "type": "object",
+  "properties": {
+    "catalog_id": { "type": "string", "minLength": 1 },
+    "page": { "type": "integer", "minimum": 1 },
+    "page_size": { "type": "integer", "minimum": 1 },
+    "total": { "type": "integer", "minimum": 0 },
+    "entries": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "entry_id": { "type": "string", "minLength": 1 },
+          "catalog_type": { "type": "string", "enum": ["github-release", "modrinth", "steam-workshop"] },
+          "name": { "type": "string", "minLength": 1 },
+          "summary": { "type": "string" },
+          "author": { "type": "string", "minLength": 1 },
+          "icon_url": { "type": "string", "format": "uri" },
+          "latest_version": { "type": "string", "minLength": 1 },
+          "game_versions": { "type": "array", "items": { "type": "string", "minLength": 1 }, "uniqueItems": true },
+          "loader_types": { "type": "array", "items": { "type": "string", "minLength": 1 }, "uniqueItems": true },
+          "download_size_bytes": { "type": "integer", "minimum": 0 },
+          "updated_at": { "type": "string", "format": "date-time" },
+          "source_ref": {
+            "type": "object",
+            "properties": {
+              "provider": { "type": "string", "enum": ["github-release", "modrinth", "steam-workshop"] }
+            },
+            "required": ["provider"],
+            "additionalProperties": true
+          }
+        },
+        "required": ["entry_id", "catalog_type", "name", "summary", "author", "latest_version", "updated_at", "source_ref"],
+        "additionalProperties": false
+      }
+    }
+  },
+  "required": ["catalog_id", "page", "page_size", "total", "entries"],
+  "additionalProperties": false
+}

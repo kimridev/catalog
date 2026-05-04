@@ -1,0 +1,14 @@
+{
+  "id": "minecraft-mods-modrinth",
+  "category_id": "minecraft",
+  "display_name": "Minecraft Mods (Modrinth)",
+  "catalog_type": "modrinth",
+  "enabled": true,
+  "install_target_path": "mods/",
+  "source": {
+    "project_id": "AANobbMI",
+    "loader": "fabric",
+    "game_versions": ["1.20.4"],
+    "sort": "featured"
+  }
+}

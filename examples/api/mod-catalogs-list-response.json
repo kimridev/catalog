@@ -1,0 +1,14 @@
+{
+  "category_id": "minecraft",
+  "catalogs": [
+    {
+      "id": "minecraft-plugins-github",
+      "display_name": "Minecraft Plugins (GitHub Releases)",
+      "catalog_type": "github-release",
+      "enabled": true,
+      "install_target_path": "plugins/",
+      "supports_search": true,
+      "supports_featured": true
+    }
+  ]
+}

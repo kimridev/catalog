@@ -1,0 +1,27 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.com/schemas/api/mod-catalogs-list-response.schema.json",
+  "type": "object",
+  "properties": {
+    "category_id": { "type": "string", "minLength": 1 },
+    "catalogs": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string", "minLength": 1 },
+          "display_name": { "type": "string", "minLength": 1 },
+          "catalog_type": { "type": "string", "enum": ["github-release", "modrinth", "steam-workshop"] },
+          "enabled": { "type": "boolean" },
+          "install_target_path": { "type": "string", "minLength": 1 },
+          "supports_search": { "type": "boolean" },
+          "supports_featured": { "type": "boolean" }
+        },
+        "required": ["id", "display_name", "catalog_type", "enabled", "install_target_path", "supports_search", "supports_featured"],
+        "additionalProperties": false
+      }
+    }
+  },
+  "required": ["category_id", "catalogs"],
+  "additionalProperties": false
+}

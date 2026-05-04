@@ -1,0 +1,12 @@
+{
+  "id": "terraria-mods-steam-workshop",
+  "category_id": "terraria",
+  "display_name": "Terraria Mods (Steam Workshop)",
+  "catalog_type": "steam-workshop",
+  "enabled": true,
+  "install_target_path": "Mods/",
+  "source": {
+    "appid": 1281930,
+    "required_tag": "mod"
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "id": "minecraft-plugins-github",
+  "category_id": "minecraft",
+  "display_name": "Minecraft Plugins (GitHub Releases)",
+  "catalog_type": "github-release",
+  "enabled": true,
+  "install_target_path": "plugins/",
+  "source": {
+    "owner": "papermc",
+    "repo": "paper",
+    "asset_name_pattern": ".*\\.jar$"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.com/schemas/api/mod-install-status-response.schema.json",
+  "type": "object",
+  "properties": {
+    "install_id": { "type": "string", "minLength": 1 },
+    "status": { "type": "string", "enum": ["queued", "running", "succeeded", "failed", "canceled"] },
+    "server_id": { "type": "string", "minLength": 1 },
+    "catalog_id": { "type": "string", "minLength": 1 },
+    "entry_id": { "type": "string", "minLength": 1 },
+    "resolved_file_name": { "type": "string", "minLength": 1 },
+    "resolved_version": { "type": "string", "minLength": 1 },
+    "installed_to": { "type": "string", "minLength": 1 },
+    "started_at": { "type": "string", "format": "date-time" },
+    "finished_at": { "type": "string", "format": "date-time" }
+  },
+  "required": ["install_id", "status", "server_id", "catalog_id", "entry_id", "started_at"],
+  "additionalProperties": false,
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "status": { "enum": ["succeeded", "failed", "canceled"] }
+        }
+      },
+      "then": {
+        "required": ["finished_at"]
+      }
+    }
+  ]
+}

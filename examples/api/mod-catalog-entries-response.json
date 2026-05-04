@@ -1,0 +1,26 @@
+{
+  "catalog_id": "minecraft-mods-modrinth",
+  "page": 1,
+  "page_size": 30,
+  "total": 1250,
+  "entries": [
+    {
+      "entry_id": "modrinth:AANobbMI",
+      "catalog_type": "modrinth",
+      "name": "Sodium",
+      "summary": "Rendering optimization mod",
+      "author": "jellysquid3",
+      "icon_url": "https://cdn.modrinth.com/data/AANobbMI/icon.png",
+      "latest_version": "mc1.20.4-0.5.8",
+      "game_versions": ["1.20.4"],
+      "loader_types": ["fabric"],
+      "download_size_bytes": 7340032,
+      "updated_at": "2026-05-01T18:22:14Z",
+      "source_ref": {
+        "provider": "modrinth",
+        "project_id": "AANobbMI",
+        "version_id": "YxvV1A2B"
+      }
+    }
+  ]
+}

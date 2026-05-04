@@ -1,0 +1,12 @@
+{
+  "install_id": "inst_01JTK5E4W7C2F5Y3M1M7AQ3CDR",
+  "status": "succeeded",
+  "server_id": "srv_01JTK1Y3Y9DE4CB4RMQ6Y8W1P3",
+  "catalog_id": "minecraft-mods-modrinth",
+  "entry_id": "modrinth:AANobbMI",
+  "resolved_file_name": "sodium-fabric-0.5.8.jar",
+  "resolved_version": "mc1.20.4-0.5.8",
+  "installed_to": "mods/sodium-fabric-0.5.8.jar",
+  "started_at": "2026-05-04T07:00:01Z",
+  "finished_at": "2026-05-04T07:00:05Z"
+}

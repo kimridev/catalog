@@ -1,0 +1,88 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.com/mod-catalog.schema.json",
+  "title": "Kimri Mod/Plugin Catalog Definition",
+  "type": "object",
+  "properties": {
+    "id": { "type": "string", "minLength": 1 },
+    "category_id": { "type": "string", "minLength": 1 },
+    "display_name": { "type": "string", "minLength": 1 },
+    "catalog_type": {
+      "type": "string",
+      "enum": ["github-release", "modrinth", "steam-workshop"]
+    },
+    "enabled": { "type": "boolean" },
+    "install_target_path": { "type": "string", "minLength": 1 },
+    "source": {
+      "type": "object",
+      "properties": {
+        "owner": { "type": "string", "minLength": 1 },
+        "repo": { "type": "string", "minLength": 1 },
+        "tag": { "type": "string", "minLength": 1 },
+        "asset_name_pattern": { "type": "string", "minLength": 1 },
+        "project_id": { "type": ["string", "integer"] },
+        "loader": { "type": "string", "minLength": 1 },
+        "game_versions": {
+          "type": "array",
+          "items": { "type": "string", "minLength": 1 },
+          "uniqueItems": true
+        },
+        "sort": { "type": "string", "minLength": 1 },
+        "appid": { "type": "integer" },
+        "required_tag": { "type": "string", "minLength": 1 }
+      },
+      "additionalProperties": true
+    }
+  },
+  "required": [
+    "id",
+    "category_id",
+    "display_name",
+    "catalog_type",
+    "source",
+    "install_target_path"
+  ],
+  "allOf": [
+    {
+      "if": { "properties": { "catalog_type": { "const": "github-release" } } },
+      "then": {
+        "properties": {
+          "source": {
+            "required": ["owner", "repo"],
+            "properties": {
+              "owner": { "type": "string", "minLength": 1 },
+              "repo": { "type": "string", "minLength": 1 }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": { "properties": { "catalog_type": { "const": "modrinth" } } },
+      "then": {
+        "properties": {
+          "source": {
+            "required": ["project_id"],
+            "properties": {
+              "project_id": { "type": ["string", "integer"] }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": { "properties": { "catalog_type": { "const": "steam-workshop" } } },
+      "then": {
+        "properties": {
+          "source": {
+            "required": ["appid"],
+            "properties": {
+              "appid": { "type": "integer" }
+            }
+          }
+        }
+      }
+    }
+  ],
+  "additionalProperties": true
+}
