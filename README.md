@@ -27,3 +27,24 @@ This repo validates all `*.json` files on PR/push via GitHub Actions.
 
 Backend should ingest these JSON definitions and publish catalog versions.
 Frontend should consume catalog via backend API and branch behavior by ID.
+
+## Automated Docker publish dispatch
+
+This repo includes `.github/workflows/docker-publish-dispatch.yml`.
+
+On push to `main` (when `images/**/*.json` changes), it:
+- auto-discovers all `image.repository` + `image.tag` entries
+- maps `ghcr.io/<owner>/<name>` to GitHub repo `<owner>/<name>`
+- dispatches `repository_dispatch` event `catalog-image-publish` to each target repo
+
+### Required secret
+
+Set repository secret:
+- `CATALOG_DISPATCH_TOKEN`: PAT with permission to call `repository_dispatch` on target image repos.
+
+### Target repo requirement
+
+Each image repo should have a workflow listening to:
+- `on: repository_dispatch` with `types: [catalog-image-publish]`
+
+Then build/push its Docker image (typically tag with `latest` and/or SHA).
