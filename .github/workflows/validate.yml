@@ -15,7 +15,7 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: "20"
 
       - name: Install ajv-cli
         run: npm i -g ajv-cli
@@ -40,29 +40,32 @@ jobs:
 
       - name: Basic ID uniqueness checks
         run: |
-          python3 - << 'PY'
-import json,glob,sys
+          python3 <<'PY'
+          import json
+          import glob
+          import sys
 
-def ids(paths):
-    out=[]
-    for p in paths:
-        with open(p) as f:
-            out.append((json.load(f).get('id',''),p))
-    return out
+          def ids(paths):
+              out = []
+              for p in paths:
+                  with open(p, encoding='utf-8') as f:
+                      out.append((json.load(f).get('id', ''), p))
+              return out
 
-cats=ids(glob.glob('categories/*.json'))
-vars=ids(glob.glob('images/**/*.json', recursive=True))
-profs=ids(glob.glob('modding-profiles/**/*.json', recursive=True))
+          cats = ids(glob.glob('categories/*.json'))
+          vars_ = ids(glob.glob('images/**/*.json', recursive=True))
+          profs = ids(glob.glob('modding-profiles/**/*.json', recursive=True))
 
-for name,items in [('category',cats),('variant',vars),('profile',profs)]:
-    seen={}
-    for i,p in items:
-        if not i:
-            print(f'missing id in {p}')
-            sys.exit(1)
-        if i in seen:
-            print(f'duplicate {name} id {i}: {seen[i]} and {p}')
-            sys.exit(1)
-        seen[i]=p
-print('ID checks passed')
-PY
+          for name, items in [('category', cats), ('variant', vars_), ('profile', profs)]:
+              seen = {}
+              for i, p in items:
+                  if not i:
+                      print(f'missing id in {p}')
+                      sys.exit(1)
+                  if i in seen:
+                      print(f'duplicate {name} id {i}: {seen[i]} and {p}')
+                      sys.exit(1)
+                  seen[i] = p
+
+          print('ID checks passed')
+          PY
