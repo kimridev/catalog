@@ -1,0 +1,16 @@
+{
+  "id": "minecraft-modpack",
+  "category_id": "minecraft",
+  "display_name": "Minecraft Modpack",
+  "slot_requirement": 2,
+  "support_level": "advanced",
+  "image": {
+    "repository": "ghcr.io/kimri/minecraft-modpack",
+    "tag": "1.20.4",
+    "tag_policy": "pinned"
+  },
+  "allowed_modding_profiles": [
+    "minecraft-forge",
+    "minecraft-fabric"
+  ]
+}

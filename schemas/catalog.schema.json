@@ -1,0 +1,38 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.com/catalog.schema.json",
+  "title": "Kimri Catalog Definition",
+  "type": "object",
+  "properties": {
+    "id": { "type": "string", "minLength": 1 },
+    "category_id": { "type": "string", "minLength": 1 },
+    "display_name": { "type": "string", "minLength": 1 },
+    "support_level": { "type": "string", "enum": ["advanced", "basic"] },
+    "slot_requirement": { "type": "integer", "enum": [1, 2] },
+    "smart_sleep_supported": { "type": "boolean" },
+    "loader_name": { "type": "string" },
+    "loader_version": { "type": "string" },
+    "compatible_variants": {
+      "type": "array",
+      "items": { "type": "string", "minLength": 1 },
+      "uniqueItems": true
+    },
+    "allowed_modding_profiles": {
+      "type": "array",
+      "items": { "type": "string", "minLength": 1 },
+      "uniqueItems": true
+    },
+    "mod_browser_enabled": { "type": "boolean" },
+    "image": {
+      "type": "object",
+      "properties": {
+        "repository": { "type": "string" },
+        "tag": { "type": "string" },
+        "tag_policy": { "type": "string", "enum": ["pinned", "track_latest"] }
+      },
+      "additionalProperties": true
+    }
+  },
+  "required": ["id", "display_name"],
+  "additionalProperties": true
+}

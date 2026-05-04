@@ -1,0 +1,10 @@
+{
+  "id": "minecraft-purpur",
+  "category_id": "minecraft",
+  "display_name": "Purpur",
+  "loader_name": "Purpur",
+  "compatible_variants": [
+    "minecraft-optimized"
+  ],
+  "mod_browser_enabled": true
+}

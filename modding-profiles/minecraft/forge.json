@@ -1,0 +1,10 @@
+{
+  "id": "minecraft-forge",
+  "category_id": "minecraft",
+  "display_name": "Forge",
+  "loader_name": "Forge",
+  "compatible_variants": [
+    "minecraft-modpack"
+  ],
+  "mod_browser_enabled": true
+}

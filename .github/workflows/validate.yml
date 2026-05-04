@@ -1,0 +1,68 @@
+name: Validate Catalog
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install ajv-cli
+        run: npm i -g ajv-cli
+
+      - name: Validate categories
+        run: |
+          for f in categories/*.json; do
+            ajv validate -s schemas/catalog.schema.json -d "$f" --spec=draft2020
+          done
+
+      - name: Validate variants
+        run: |
+          find images -name '*.json' -print0 | while IFS= read -r -d '' f; do
+            ajv validate -s schemas/catalog.schema.json -d "$f" --spec=draft2020
+          done
+
+      - name: Validate modding profiles
+        run: |
+          find modding-profiles -name '*.json' -print0 | while IFS= read -r -d '' f; do
+            ajv validate -s schemas/catalog.schema.json -d "$f" --spec=draft2020
+          done
+
+      - name: Basic ID uniqueness checks
+        run: |
+          python3 - << 'PY'
+import json,glob,sys
+
+def ids(paths):
+    out=[]
+    for p in paths:
+        with open(p) as f:
+            out.append((json.load(f).get('id',''),p))
+    return out
+
+cats=ids(glob.glob('categories/*.json'))
+vars=ids(glob.glob('images/**/*.json', recursive=True))
+profs=ids(glob.glob('modding-profiles/**/*.json', recursive=True))
+
+for name,items in [('category',cats),('variant',vars),('profile',profs)]:
+    seen={}
+    for i,p in items:
+        if not i:
+            print(f'missing id in {p}')
+            sys.exit(1)
+        if i in seen:
+            print(f'duplicate {name} id {i}: {seen[i]} and {p}')
+            sys.exit(1)
+        seen[i]=p
+print('ID checks passed')
+PY

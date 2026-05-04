@@ -1,0 +1,10 @@
+{
+  "id": "terraria-vanilla",
+  "category_id": "terraria",
+  "display_name": "Terraria Vanilla",
+  "loader_name": "Vanilla",
+  "compatible_variants": [
+    "terraria-vanilla"
+  ],
+  "mod_browser_enabled": false
+}

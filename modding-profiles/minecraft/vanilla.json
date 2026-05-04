@@ -1,0 +1,10 @@
+{
+  "id": "minecraft-vanilla",
+  "category_id": "minecraft",
+  "display_name": "Minecraft Vanilla",
+  "loader_name": "Vanilla",
+  "compatible_variants": [
+    "minecraft-vanilla"
+  ],
+  "mod_browser_enabled": false
+}

@@ -1,0 +1,275 @@
+Kimri manual catalog data checklist
+
+Purpose
+- This file is for manual data you should curate yourself.
+- IDs below are intended to be stable, hardcoded app keys.
+- Frontend assets/logic should branch on these IDs, not on display names.
+- Do not casually rename IDs once UI/runtime logic depends on them.
+
+Hardcoded ID policy
+- Game category IDs are stable product keys.
+- Variant IDs are stable product keys.
+- Modding profile IDs are stable product keys.
+- Display names can change later. IDs should not.
+
+Recommended fixed category IDs
+- minecraft
+- scpsl
+- andromeda
+- valheim
+- project-zomboid
+- terraria
+- barotrauma
+- dont-starve-together
+- the-forest
+
+Recommended fixed variant IDs
+- minecraft-vanilla
+- minecraft-optimized
+- minecraft-modpack
+- scpsl-standard
+- andromeda-standard
+- valheim-vanilla
+- valheim-bepinex
+- project-zomboid-standard
+- terraria-vanilla
+- terraria-tmodloader
+- barotrauma-standard
+- dont-starve-together-standard
+- the-forest-standard
+
+Recommended fixed modding profile IDs
+- minecraft-vanilla
+- minecraft-paper
+- minecraft-purpur
+- minecraft-forge
+- minecraft-fabric
+- valheim-vanilla
+- valheim-bepinex
+- terraria-vanilla
+- terraria-tmodloader
+
+Important frontend/runtime note
+- Special frontend/runtime behavior should target IDs like:
+  - minecraft
+  - minecraft-modpack
+  - scpsl
+  - andromeda
+  - valheim
+- Example: logos, special create flow, modpack browser, SCP-specific UX, game-specific config panels.
+
+What is already represented in backend today
+- category:
+  - id
+  - display_name
+  - support_level
+  - smart_sleep_supported
+- variant:
+  - id
+  - category_id
+  - display_name
+  - slot_requirement
+  - support_level
+  - image.repository
+  - image.tag
+  - image.tag_policy
+  - allowed_modding_profiles
+- modding profile:
+  - id
+  - category_id
+  - display_name
+  - loader_name
+  - loader_version
+  - compatible_variants
+  - mod_browser_enabled
+
+What still needs manual curation beyond the current backend shape
+- default public ports
+- private/internal/admin ports
+- known config files
+- known log files
+- save/world/data paths
+- backup behavior
+- file-manager safety rules
+- restart-required rules for config fields
+- default/min/recommended RAM guidance
+- CPU expectation guidance
+- supported game versions
+- generated default files
+- smart backup path manifests
+- special frontend/runtime logic flags
+- logo/icon assets
+
+Per-category manual data template
+- category_id:
+- display_name:
+- support_level: advanced | basic
+- smart_sleep_supported: yes | no
+- logo/icon asset path:
+- frontend special handling:
+- user-facing short description:
+- default join port(s):
+- internal/admin/private ports:
+- known config files:
+- known log files:
+- primary save/data paths:
+- backup behavior notes:
+- file safety rules:
+- known risky files/paths:
+- notes:
+
+Per-variant manual data template
+- variant_id:
+- category_id:
+- display_name:
+- slot_requirement: 1 | 2
+- support_level: advanced | basic
+- image_repository:
+- image_tag strategy:
+- image_tag policy: pinned | track_latest
+- default RAM:
+- minimum RAM:
+- recommended RAM:
+- CPU expectation:
+- startup env/flags:
+- generated default files:
+- config indexing/search notes:
+- supported versions:
+- allowed modding profiles:
+- premium/heavy rationale:
+- frontend special handling:
+- notes:
+
+Per-modding-profile manual data template
+- profile_id:
+- category_id:
+- display_name:
+- loader_name:
+- loader_version:
+- compatible_variants:
+- mod_browser_enabled: yes | no
+- built into image or installed into data:
+- compatible game versions:
+- content types enabled:
+- extra config files:
+- extra log files:
+- extra file safety rules:
+- migration/conversion path from vanilla:
+- frontend special handling:
+- notes:
+
+Suggested manual data to fill first
+1. Minecraft category
+- category_id: minecraft
+- logo/icon asset path:
+- short description:
+- default public port: 25565/tcp
+- common config files:
+- common log files:
+- world/data paths:
+- smart sleep support decision:
+- backup behavior notes:
+
+2. Minecraft Vanilla variant
+- variant_id: minecraft-vanilla
+- image_repository: ghcr.io/kimri/minecraft
+- image tag to use:
+- RAM guidance:
+- supported MC versions:
+- generated default files:
+
+3. Minecraft Optimized variant
+- variant_id: minecraft-optimized
+- image_repository: ghcr.io/kimri/minecraft-optimized
+- image tag to use:
+- which server software: Paper | Purpur
+- RAM guidance:
+- supported MC versions:
+
+4. Minecraft Modpack variant
+- variant_id: minecraft-modpack
+- image_repository: ghcr.io/kimri/minecraft-modpack
+- image tag to use:
+- slot requirement confirmation:
+- frontend special flow details:
+- modpack source policy:
+- supported loaders:
+- install metadata to store:
+- backup behavior before install/update:
+
+5. Minecraft profiles
+- profile_id: minecraft-vanilla
+  - loader_name:
+  - compatible_variants:
+- profile_id: minecraft-paper
+  - loader_version:
+  - compatible_variants:
+- profile_id: minecraft-purpur
+  - loader_version:
+  - compatible_variants:
+- profile_id: minecraft-forge
+  - loader_version:
+  - compatible_variants:
+- profile_id: minecraft-fabric
+  - loader_version:
+  - compatible_variants:
+
+6. SCP: Secret Laboratory
+- category_id: scpsl
+- logo/icon asset path:
+- standard variant ID: scpsl-standard
+- default public ports:
+- admin/private ports:
+- config files:
+- logs:
+- save/data paths:
+- image repository/tag:
+- special frontend/runtime logic:
+
+7. Andromeda
+- category_id: andromeda
+- logo/icon asset path:
+- standard variant ID: andromeda-standard
+- public/private ports:
+- config files:
+- logs:
+- save/data paths:
+- image repository/tag:
+- special frontend/runtime logic:
+
+8. Valheim
+- category_id: valheim
+- logo/icon asset path:
+- vanilla variant ID: valheim-vanilla
+- modded variant ID: valheim-bepinex
+- public/private ports:
+- config files:
+- logs:
+- save/world paths:
+- image repository/tag:
+- frontend/runtime special handling:
+
+9. Terraria
+- category_id: terraria
+- logo/icon asset path:
+- vanilla variant ID: terraria-vanilla
+- tModLoader variant ID: terraria-tmodloader
+- ports:
+- config files:
+- logs:
+- world/player paths:
+- image repository/tag:
+
+10. Global policy decisions you should fill manually
+- Which games are advanced vs basic support
+- Which variants are 2-slot premium variants
+- Which plans can access premium variants
+- Which games support Smart Sleep
+- Which config files should be surfaced as known/polished
+- Which files should be hidden from normal file-manager view
+- Which backups are full vs smart by default
+- Which game/version combinations are officially supported
+
+Short rule of thumb
+- IDs: fixed and code-facing
+- display names/descriptions/logos/paths/ports/versions/policies: manual curated data

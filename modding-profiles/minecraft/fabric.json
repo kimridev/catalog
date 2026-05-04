@@ -1,0 +1,10 @@
+{
+  "id": "minecraft-fabric",
+  "category_id": "minecraft",
+  "display_name": "Fabric",
+  "loader_name": "Fabric",
+  "compatible_variants": [
+    "minecraft-modpack"
+  ],
+  "mod_browser_enabled": true
+}

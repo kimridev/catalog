@@ -1,0 +1,15 @@
+{
+  "id": "terraria-vanilla",
+  "category_id": "terraria",
+  "display_name": "Terraria Vanilla",
+  "slot_requirement": 1,
+  "support_level": "advanced",
+  "image": {
+    "repository": "ghcr.io/kimri/terraria",
+    "tag": "latest",
+    "tag_policy": "track_latest"
+  },
+  "allowed_modding_profiles": [
+    "terraria-vanilla"
+  ]
+}

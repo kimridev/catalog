@@ -1,0 +1,10 @@
+{
+  "id": "minecraft-paper",
+  "category_id": "minecraft",
+  "display_name": "Paper",
+  "loader_name": "Paper",
+  "compatible_variants": [
+    "minecraft-optimized"
+  ],
+  "mod_browser_enabled": true
+}

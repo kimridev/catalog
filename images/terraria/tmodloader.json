@@ -1,0 +1,15 @@
+{
+  "id": "terraria-tmodloader",
+  "category_id": "terraria",
+  "display_name": "Terraria tModLoader",
+  "slot_requirement": 1,
+  "support_level": "advanced",
+  "image": {
+    "repository": "ghcr.io/kimri/terraria-tmodloader",
+    "tag": "latest",
+    "tag_policy": "track_latest"
+  },
+  "allowed_modding_profiles": [
+    "terraria-tmodloader"
+  ]
+}

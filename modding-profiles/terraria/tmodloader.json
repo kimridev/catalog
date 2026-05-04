@@ -1,0 +1,10 @@
+{
+  "id": "terraria-tmodloader",
+  "category_id": "terraria",
+  "display_name": "Terraria tModLoader",
+  "loader_name": "tModLoader",
+  "compatible_variants": [
+    "terraria-tmodloader"
+  ],
+  "mod_browser_enabled": true
+}
